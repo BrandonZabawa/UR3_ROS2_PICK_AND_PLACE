@@ -7,14 +7,14 @@ body:
     id: deliverable_id
     attributes:
       label: Deliverable ID
-      description: e.g. R2, HW-3, ML-6, SW-1
+      description: e.g. HW-3, ML-6, SW-1, AV-2
     validations:
       required: true
   - type: dropdown
     id: robot
     attributes:
       label: Robot
-      options: [R-SIM, R-HW, R-VS, R-CLUB, Portfolio]
+      options: [R-SIM, R-HW, R-AV, R-VS, R-CLUB, Portfolio]
     validations:
       required: true
   - type: dropdown
