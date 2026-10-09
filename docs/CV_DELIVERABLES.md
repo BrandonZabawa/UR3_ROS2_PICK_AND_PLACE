@@ -1,5 +1,9 @@
 # Computer-vision deliverables: plan, scope, and how to run them
 
+> **Scope note:** the schedule and acceptance criteria in `DELIVERABLES.md` (Part A) are
+> the authoritative lean version (2-4 weeks). This file is the longer technical
+> reference; steps marked *optional* below are not required for the agreed deliverables.
+
 Three class deliverables, each with one measurable claim, one script/notebook that
 produces it, and one table or figure for the report. Nothing here exists in the repo
 yet (verified by grep: no calibration code, no custom-trained detector, no GT pose
@@ -41,12 +45,12 @@ domain-shifted scenes)."
    frame, otherwise val leaks into train.
 4. **Train + evaluate in Colab.** The notebook does `YOLO('yolov8n.pt').train(...)`
    then `.val(split='test')` and prints mAP50 / mAP50-95 / per-class AP.
-5. **Add one honest baseline:** the existing HSV detector scored with the same
+5. *(Optional)* **Add one honest baseline:** the existing HSV detector scored with the same
    metric. "Fine-tuned YOLO beats the colour baseline by X mAP" is a stronger
    result than a single number.
 
-Pitfall to state in the report: a synthetic-only test set is easy. Include at least
-one held-out condition (new lighting or new textures) so mAP means something.
+Pitfall to state in the report: a synthetic-only test set is easy. Say so in the
+limitations paragraph. A held-out lighting/texture condition is optional but strengthens the result.
 
 ## Deliverable 2: camera + hand-eye calibration
 
@@ -91,17 +95,14 @@ ADD(-S) AUC Z on N frames."
 3. Metrics: translation error (mm), rotation geodesic error (deg), ADD and ADD-S
    (ADD-S for symmetric objects such as cylinders; a cylinder's yaw is
    unobservable, so scoring it with plain ADD is a mistake).
-4. Add depth noise (Gazebo `<noise>` on the depth sensor) and show error vs noise.
+4. *(Optional)* Add depth noise (Gazebo `<noise>` on the depth sensor) and show error vs noise.
 5. Replace the identity quaternion in `DepthPoseEstimator.estimate_object_pose`
    with the estimator's output so the pipeline actually uses it.
 
-## Suggested order (about 6-8 weeks part-time)
+## Suggested order
 
-1. Environment working end to end (RViz/Gazebo launch). 1 week.
-2. Deliverable 2 first. It fixes frames/intrinsics that 1 and 3 depend on. 2 weeks.
-3. Deliverable 1 capture + Colab training. 2 weeks.
-4. Deliverable 3 using the YOLO crops. 2 weeks.
-5. Report: one table per deliverable, plus failure cases.
+See `DELIVERABLES.md` for the day-by-day 2-week and 4-week schedules. The three tracks run
+in parallel after a short shared setup; calibration output feeds the pose estimator last.
 
 ## Installing RViz on Linux
 
