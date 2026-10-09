@@ -36,3 +36,12 @@ body:
     id: conclusion
     attributes:
       label: Conclusion and next step
+  - type: input
+    id: hours
+    attributes:
+      label: Estimated / actual hours
+      description: e.g. 3 / 4.5
+  - type: textarea
+    id: learned
+    attributes:
+      label: What I learned

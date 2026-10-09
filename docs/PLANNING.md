@@ -1,238 +1,276 @@
-# Planning cadence: monthly, bi-weekly, weekly, daily
+# Planning cadence: full-time solo-dev mode
 
-A working plan for running several robot projects at once, packing as many concepts
-as possible into each robot, and leaving visible evidence (board, repo, website) of
-what got done.
+Monthly, bi-weekly, weekly and daily plan for running several robot projects as a
+full-time job (about 55-60 hours a week, 10-12 hours on weekdays), until output is
+predictable enough to scale down to a sustainable load.
 
 Calendar starts **Monday 12 October 2026**. Sprints are two weeks; milestones close
-every second sprint (about monthly).
+every second sprint (four weeks).
 
-## Assumptions (edit these first)
+## Ground rules
 
-| Item | Assumed | Notes |
+| Rule | Value |
+|---|---|
+| Work hours | Mon-Fri 10-12 h, Saturday 6-8 h, Sunday off except a 1 h weekly review |
+| Weekly output | **At least 1 deliverable done per week** (done = closed with evidence) |
+| Sprint output | **At least 2 deliverables per sprint**, more as skill and familiarity grow (target 3-4 at this workload) |
+| Classes | Not scheduled here. You plan them. Class concepts feed the robots (see "Class-to-robot hook" below). |
+| Proof of work | Every closed item has evidence, estimated vs actual hours, and a "what I learned" note |
+| Essentials | Sleep, exercise, meals and people are fixed blocks in the day plan, not leftovers |
+
+## Workload phases and scale-down triggers
+
+| Phase | Weekly hours | Ends when |
 |---|---|---|
-| Hours per week, all projects | ~25-30 | Adjust and rescale the tables below |
-| Class MVP weeks | 15-20 h/week for 2 weeks | Then drops to report polishing |
-| Hardware track | 4-6 h/week | Rises after the class MVP |
-| Viable Solutions arm | **unknown** | Placeholder rows marked `VS-?`; fill them in from that project |
-| Board + website + devlog | ~2 h/week | Fridays |
+| **1. Ramp** | 55-60 | Scale-down triggers met over 3 consecutive sprints (earliest end of M3) |
+| **2. Stabilise** | 45-50 | Triggers still met over 3 more sprints at the lower hours |
+| **3. Sustainable** | ~40 | Ongoing |
+
+**Scale-down triggers** (check at each sprint review; all must hold):
+1. At least 80% of the deliverables committed to in the sprint were closed with evidence.
+2. Actual hours within ±25% of the estimate for at least 70% of closed items.
+3. No item carried over for more than one sprint.
+4. The next two sprints' backlog is already written and sized.
+
+**Cut-scope triggers** (if any holds, remove scope; do not add hours):
+- Two sprints in a row below the 2-deliverable minimum.
+- Sleep or exercise blocks skipped on more than 2 days in a week.
+- The same item blocked for more than a week with no plan to unblock it.
 
 ---
 
 ## 1. The robots and what each one carries
 
-Three robots, each loaded with as many concepts as it can hold. The rule: **every
-monthly milestone on a robot must exercise at least two tracks** (for example
-embedded + control + modelling), so no month produces a single-skill result.
+| Robot | Role | Tracks it carries | Share of hours (Phase 1) |
+|---|---|---|---|
+| **R-SIM: UR3 suite (this repo)** | Software / vision / ML flagship | CV, DL/ML, ROS 2, MoveIt, software engineering, FANUC as a second arm config | ~35% (~20 h) |
+| **R-HW: "DUM-E" custom arm (new repo)** | Embedded / hardware flagship | Firmware, PCB, motor control, CAN, RTOS, system identification, ros2_control hardware interface | ~35% (~20 h) |
+| **R-VS: Viable Solutions arm** | Industrial / integration | Fill in from that project (`VS-*`) | ~10-15% |
+| **R-CLUB: club robots** | Team contributions | Fill in from the club's needs (`CLUB-*`) | ~5-10% |
+| **Portfolio + tracker + learning** | Evidence and reading | Devlog, website, datasheets, papers | ~5-10% |
 
-| Robot | Role | Tracks it carries |
-|---|---|---|
-| **R-SIM: UR3 suite (this repo)** | Software/vision/ML flagship | CV, DL/ML, ROS 2, MoveIt, software engineering, FANUC as a second arm config |
-| **R-HW: custom arm (new repo)** | Embedded/hardware flagship | Firmware, PCB, motor control, CAN, RTOS, system identification, ros2_control hardware interface |
-| **R-VS: Viable Solutions arm** | Industrial/integration | Whatever that project requires; link its deliverables here as `VS-*` |
-
-The three link to each other on purpose:
-- R-HW's measured motor data feeds R-SIM's simulator (system identification, HW-11).
-- R-SIM's calibration and pose code runs on R-HW's camera later (HW-17).
-- R-SIM's arm-config layer (SW-6) is how R-HW and FANUC become selectable arms.
+Each monthly milestone on R-SIM and R-HW must exercise **at least two tracks** (for
+example firmware + control + modelling), so no month produces a single-skill result.
+The robots feed each other:
+- DUM-E's measured motor data improves the UR3 simulator (system identification).
+- The UR3 suite's calibration and pose code later runs on DUM-E's camera.
+- The arm-config layer (SW-6) makes DUM-E and FANUC selectable arms in the suite.
 
 ### Concept-density matrix
 
-`●` = core concept on that robot, `○` = secondary.
+`●` core, `○` secondary, `?` fill in.
 
-| Concept | R-SIM | R-HW | R-VS |
-|---|---|---|---|
-| Camera + hand-eye calibration | ● | ○ | ? |
-| Detection (YOLO), datasets, mAP | ● |  | ? |
-| 6-DoF pose, point clouds, ICP | ● | ○ | ? |
-| Training, ablations, quantisation, deployment | ● | ○ | ? |
-| Imitation / reinforcement learning | ○ |  | ? |
-| Motion planning (MoveIt, MTC) | ● | ○ | ? |
-| ros2_control (controllers + hardware interface) | ○ | ● | ? |
-| Firmware: timers, PWM, ADC/DMA, interrupts | | ● | ? |
-| Buses: CAN, UART, SPI | | ● | ? |
-| Motor control: PID, FOC | | ● | ? |
-| RTOS, timing, WCET | | ● | ? |
-| PCB design and bring-up | | ● | ? |
-| Safety: e-stop, watchdog, fault handling | ○ | ● | ? |
-| System identification, sim-to-real | ● | ● | ? |
-| CI, tests, code quality, docs | ● | ● | ? |
+| Concept | R-SIM | R-HW | R-VS | R-CLUB |
+|---|---|---|---|---|
+| Camera + hand-eye calibration | ● | ○ | ? | ? |
+| Detection, datasets, mAP | ● |  | ? | ? |
+| 6-DoF pose, point clouds, ICP | ● | ○ | ? | ? |
+| Training, ablations, quantisation, deployment | ● | ○ | ? | ? |
+| Imitation / reinforcement learning | ○ |  | ? | ? |
+| Motion planning (MoveIt, MTC) | ● | ○ | ? | ? |
+| ros2_control (controllers + hardware interface) | ○ | ● | ? | ? |
+| Firmware: timers, PWM, ADC/DMA, interrupts |  | ● | ? | ? |
+| Buses: CAN, UART, SPI |  | ● | ? | ? |
+| Motor control: PID, FOC |  | ● | ? | ? |
+| RTOS, timing, WCET |  | ● | ? | ? |
+| PCB design and bring-up |  | ● | ? | ? |
+| Mechanical design (printed gearboxes, tolerances) |  | ● | ? | ? |
+| Safety: e-stop, watchdog, faults | ○ | ● | ? | ? |
+| System identification, sim-to-real | ● | ● | ? | ? |
+| CI, tests, code quality, docs | ● | ● | ? | ? |
 
-Fill the R-VS column from that project; gaps in the other columns show where it adds the most.
+### Class-to-robot hook
 
----
-
-## 2. Cadence
-
-| Level | Length | Output (must exist when it ends) | Where it is recorded |
-|---|---|---|---|
-| **Milestone** | ~4 weeks (2 sprints) | One demonstrable result per active robot: tagged release, demo video or GIF, results plot/table | GitHub milestone + release, website project page |
-| **Sprint** | 2 weeks | One sprint goal per active robot; merged PRs; short sprint review note | Project board iteration, `docs/devlog/` sprint note |
-| **Week** | 7 days | 3-6 closed issues; one devlog entry | Board, devlog, website (weekly post optional) |
-| **Day** | one work session | 1 main task + 1 small task, each ends in a commit, PR, or issue update | Issue comments, commit history |
-
-### Definition of done (applies at every level)
-
-An item is done only when it has **evidence attached**: a merged PR, a test result, a
-plot, a photo, or a video, linked in the issue's "Evidence" field. No evidence, not done.
-
-### Weekly rhythm
-
-| Day | Activity |
-|---|---|
-| Monday | 30-minute planning: pick the week's issues from the sprint, size them |
-| Tue-Thu | Build. Hardest task of the week early in the week |
-| Friday | Verify, close issues with evidence, write devlog entry, update board and website |
-| Weekend | Buffer or long uninterrupted blocks (hardware bench work fits here) |
-
-### Daily rhythm
-
-1. Pick **one main task** (2-4 h) and **one small task** (≤30 min, e.g. a doc fix or test).
-2. Work on a branch; commit at least once.
-3. End with a one-line log comment on the issue: what changed, what's next, what's blocked.
-
-Tasks bigger than ~4 h get split before they are started.
+Classes are yours to plan. One rule connects them to this plan: when a class covers a
+concept in the matrix, open a small issue (size S or M) that applies it to one robot.
+These count toward the weekly deliverable minimum like any other item.
 
 ---
 
-## 3. Monthly milestones (first six months)
+## 2. DUM-E on a budget
 
-| Milestone | Dates | R-SIM | R-HW | R-VS | Portfolio |
+Commercial open arms such as PAROL6 are out of budget, so DUM-E is built in stages from
+low-cost parts, using open designs as free references. You keep the firmware learning
+because you write every layer yourself.
+
+| Stage | Hardware | What it teaches | Cost pressure |
+|---|---|---|---|
+| A. One joint | Dev board (e.g. STM32 Nucleo with built-in debugger), brushed DC gearmotor with encoder, small H-bridge, bench supply | PWM, encoders, ADC, PID, CAN, ros2_control | Lowest; reuse everything later |
+| B. FOC joint | Small gimbal BLDC, low-cost FOC driver board, magnetic encoder | Field-oriented control, current sensing, calibration | Low |
+| C. 3-DoF desktop arm | Stage A or B joints, 3D-printed links and reductions (makerspace/library printers or a print service) | Mechanics, multi-joint bus, kinematics, gravity compensation | Moderate; spread over months |
+| D. Own boards | KiCad board replacing the dev board + driver | PCB design and bring-up | Moderate; cheap prototype fab services |
+| E. Camera on DUM-E | Low-cost USB/depth camera | Runs R-SIM's calibration and pose code on real hardware | Low-moderate |
+
+Ways to stay close to open-source arms without owning one:
+- Read PAROL6, AR4 and Moveo design files and firmware as references (free; check each licence).
+- Contribute where cheap hardware is enough: SimpleFOC (a gimbal motor and driver board),
+  ros2_control, MoveIt docs and examples, or software-only issues on the arm projects.
+- Simulate an open arm's URDF in the UR3 suite once SW-6 makes arms selectable.
+
+Check current prices before ordering; this plan names no prices.
+
+---
+
+## 3. Cadence and proof of work
+
+| Level | Length | Minimum output | Recorded in |
+|---|---|---|---|
+| **Milestone** | 4 weeks (2 sprints) | Per robot: a tagged release, demo video or GIF, results plot/table | GitHub milestone + release; website robot page |
+| **Sprint** | 2 weeks | ≥2 deliverables done (target 3-4); sprint review note with velocity | Board iteration; `docs/devlog/` |
+| **Week** | 7 days | ≥1 deliverable done; devlog entry | Board; devlog |
+| **Day** | one work day | A commit or PR on the main task; an issue log comment | Commits; issue comments |
+
+**Definition of done:** merged PR or test result, evidence link, estimated vs actual
+hours, and a "what I learned" note on the issue. No evidence, not done.
+
+**Velocity:** at each sprint review, record deliverables done, hours estimated vs actual,
+and items carried over. This is the data the scale-down triggers use.
+
+---
+
+## 4. Daily template (weekdays, ~10.5-11.5 h of work)
+
+| Time | Block | Notes |
+|---|---|---|
+| 07:00 | Wake | 8 h sleep window ends |
+| 07:15-08:00 | Exercise | Fixed |
+| 08:00-08:30 | Breakfast, read the day's plan | |
+| 08:30-12:30 | **Deep block 1 (4 h):** hardest task of the day | Usually R-HW or R-SIM main deliverable |
+| 12:30-13:15 | Lunch, away from the desk | |
+| 13:15-17:15 | **Deep block 2 (4 h):** second robot's main task | Alternate robots from block 1 |
+| 17:15-17:45 | Walk / break | |
+| 17:45-20:15 | **Block 3 (2.5 h):** tests, docs, tracker updates, R-VS / R-CLUB items, datasheets | Shallower work |
+| 20:15-21:30 | Dinner and people | Fixed |
+| 21:30-22:30 | Optional block 4 (1 h) **or** reading/gaming | Only when ahead of plan |
+| 22:30-23:00 | Wind down; no screens if possible | |
+| 23:00 | Sleep | |
+
+**Saturday (6-8 h):** long uninterrupted bench sessions (soldering, bring-up, mechanical
+assembly) and anything that needs hours of setup.
+**Sunday:** off. One hour for the weekly review (section 8).
+
+Daily rule: each deep block targets one issue; tasks bigger than ~4 h are split before
+they start. End the day with a one-line comment on each touched issue: done, next, blocked.
+
+---
+
+## 5. Monthly milestones (Phase 1 and first half of Phase 2)
+
+| Milestone | Dates | R-SIM (UR3 suite) | R-HW (DUM-E) | R-VS / R-CLUB | Portfolio |
 |---|---|---|---|---|---|
-| **M1** | 12 Oct - 8 Nov 2026 | Class MVP R1-R4 done and presented | HW-1 bench + safety; parts ordered; HW-2 dev-board bring-up started | VS-? | Board live; website v1 (home, 3 project pages, devlog) |
-| **M2** | 9 Nov - 6 Dec | SW-1 CI, SW-2 pinned environment, SW-3 characterisation tests, ML-1 experiment hygiene | HW-2 done; HW-3 closed-loop DC motor with step-response plot | VS-? | Post: "Class CV results" write-up |
-| **M3** | 7 Dec - 3 Jan 2027 | SW-4 logging cleanup, ML-2 own mAP implementation, CV-3 point clouds | EMB-2 motor model in sim compared against HW-3 data; HW-4 CAN node | VS-? | Post: "Sim vs real motor" with plots |
-| **M4** | 4 Jan - 31 Jan | SW-6 per-arm config, SW-9 logic split from nodes | HW-5 ros2_control interface moves the real joint from ROS 2 | VS-? | Demo video: ROS 2 driving your own joint |
-| **M5** | 1 Feb - 28 Feb | SW-7 FANUC as a selectable arm in sim; ML-6 YOLO ablations | HW-6 safety + telemetry; HW-7 hardware MVP write-up | VS-? | Release: hardware MVP v1.0 |
-| **M6** | 1 Mar - 28 Mar | ML-8 quantisation + ONNX latency study; CV-5 segmentation | HW-8 PCB v1 designed and ordered; HW-9 FOC started on a dev board | VS-? | Website v2: results page across all robots |
+| **M1** | 12 Oct - 8 Nov 2026 | SW-1 CI, SW-2 pinned environment, SW-3 characterisation tests, SW-4 logging cleanup, ML-1 experiment hygiene | HW-1 bench + safety, HW-2 dev-board bring-up, EMB-1 portable servo core with host tests, HW-3 started | VS-? / CLUB-? | Board live; website v1; devlog weekly |
+| **M2** | 9 Nov - 6 Dec | SW-5 remove duplicates, SW-6 per-arm config, SW-9 logic split from nodes, ML-2 own mAP, CV-3 point clouds | HW-3 closed-loop DC joint with step-response plot; EMB-2 motor model compared to it; HW-4 CAN node | VS-? / CLUB-? | Post: "Sim vs real joint" |
+| **M3** | 7 Dec - 3 Jan 2027 | SW-7 FANUC selectable in sim, SW-8 lifecycle nodes, ML-3 dataset audit, ML-4 CNN from scratch | HW-5 ros2_control drives the real joint; HW-6 safety + telemetry; HW-7 write-up -> **hardware MVP v1.0** | VS-? / CLUB-? | Demo video; first scale-down check |
+| **M4** | 4 Jan - 31 Jan | CV-2 stereo depth, CV-4 PnP pose, ML-6 YOLO ablations | DUM-E stage C mechanical design; HW-10 printed reduction; HW-11 system identification | VS-? / CLUB-? | Post: "DUM-E design" |
+| **M5** | 1 Feb - 28 Feb | CV-5 segmentation, CV-7 visual servoing, ML-8 quantisation + ONNX latency | HW-9 FOC joint (stage B); HW-12 three joints on one CAN bus; HW-13 RTOS + jitter measurement | VS-? / CLUB-? | Release: DUM-E v0.2 (3 joints moving) |
+| **M6** | 1 Mar - 28 Mar | CV-9 learned pose or ML-11 imitation learning; repo restructure per `REPO_STRUCTURE.md` | HW-8 PCB v1 designed and ordered; HW-16 kinematics + repeatability; HW-17 camera on DUM-E running R-SIM calibration | VS-? / CLUB-? | Website v2: results across all robots |
 
-Month 6 onward: continue from Part B of `DELIVERABLES.md` and `HARDWARE_BUILD_ROADMAP.md`,
-choosing the next items with the concept-density matrix.
+Hardware lead times (parts, PCBs) can slip R-HW items; keep a software-only R-HW task
+ready (simulation, firmware tests, docs) for waiting periods.
 
 The holiday sprint (21 Dec - 3 Jan) is planned at half capacity.
 
 ---
 
-## 4. Bi-weekly sprints (first four)
+## 6. Bi-weekly sprints (first six, Phase 1)
 
-| Sprint | Dates | Sprint goal | Main items |
+| Sprint | Dates | Sprint goal | Committed deliverables (≥2, target 3-4) |
 |---|---|---|---|
-| **S1** | 12-25 Oct | Class MVP functionally complete (2-week plan) | Shared setup; R1, R2, R3 in parallel; integrate; report draft. Board + website skeleton. Order HW-1/HW-2 parts. |
-| **S2** | 26 Oct - 8 Nov | Class MVP polished and presented; hardware bench ready | Buffer for anything left from S1 (this is the 4-week plan's second half); report polish; code-quality pass on your scripts; HW-1 safety checklist + e-stop test; HW-2 blink, UART, debugger |
-| **S3** | 9-22 Nov | CI running on R-SIM; first closed loop on hardware | SW-1 CI (lint, build, test); SW-2 environment pinned; HW-2 done; HW-3 wiring + encoder reading |
-| **S4** | 23 Nov - 6 Dec | Tests protecting R-SIM; DC motor step response | SW-3 characterisation tests; ML-1 seeds/configs/logging; HW-3 1 kHz loop + step-response plot |
+| **S1** | 12-25 Oct | Foundations: CI and a working bench | SW-1 CI · SW-2 pinned env · HW-1 bench + e-stop · board + website skeleton |
+| **S2** | 26 Oct - 8 Nov | Tests on R-SIM, firmware on a board | SW-3 characterisation tests · SW-4 logging cleanup · HW-2 bring-up · EMB-1 servo core |
+| **S3** | 9-22 Nov | First closed loop on real hardware | HW-3 DC joint loop · SW-5 de-duplication · ML-1 experiment hygiene |
+| **S4** | 23 Nov - 6 Dec | Sim and real agree; arms become config | EMB-2 motor model vs HW-3 data · SW-6 per-arm config · HW-4 CAN node |
+| **S5** | 7-20 Dec | ROS 2 drives your own joint | HW-5 ros2_control interface · SW-9 logic split · ML-2 own mAP |
+| **S6** | 21 Dec - 3 Jan | Hardware MVP release (half capacity) | HW-6 safety + telemetry · HW-7 write-up · first scale-down check |
 
 ---
 
-## 5. Weekly plan (first four weeks)
+## 7. Weekly plan (first four weeks)
 
-| Week | Dates | Main deliverables | Small deliverables |
+| Week | Dates | Deliverables closed (≥1) | Also in progress |
 |---|---|---|---|
-| W1 | 12-18 Oct | Shared setup gate passed; R1 calibration captured; R2 dataset script producing checked images | Project board configured; issue templates in use |
-| W2 | 19-25 Oct | R1 table; R2 trained with mAP; R3 working on GT then YOLO boxes; report draft | Website skeleton deployed; HW parts ordered |
-| W3 | 26 Oct - 1 Nov | Report polished; figures final; code-quality pass (ruff, tests on maths functions, README commands) | HW-1 bench and e-stop set up |
-| W4 | 2-8 Nov | Present class MVP; tag release `class-mvp-v1.0` | HW-2 blink + UART + breakpoints; devlog post on the class results |
+| W1 | 12-18 Oct | SW-1 CI running on PRs | SW-2 environment; HW-1 bench set up, parts ordered; board configured |
+| W2 | 19-25 Oct | SW-2 pinned environment; HW-1 bench + e-stop tested | Website skeleton; HW-2 toolchain |
+| W3 | 26 Oct - 1 Nov | HW-2 dev-board bring-up (debugger, UART, timer IRQ) | SW-3 characterisation tests; EMB-1 started |
+| W4 | 2-8 Nov | SW-3 tests; EMB-1 servo core with host tests | SW-4 logging cleanup; HW-3 wiring |
+
+## 8. Day-by-day (week 1: 12-18 October)
+
+| Date | Deep block 1 (4 h) | Deep block 2 (4 h) | Block 3 (2.5 h) |
+|---|---|---|---|
+| Mon 12 Oct | SW-1: lint config (ruff, clang-format) | HW-1: list bench parts, safety checklist draft | Create board, fields, views; issues for S1 |
+| Tue 13 Oct | SW-1: CI workflow (lint + colcon build) | HW-1: e-stop wiring plan; order parts | VS-? / CLUB-? |
+| Wed 14 Oct | SW-1: fix lint/build failures; CI green | SW-2: decide ROS + Gazebo pairing; document it | Devlog draft |
+| Thu 15 Oct | SW-2: reproduce install from scratch (container) | HW-2: toolchain install; blink on the dev board | VS-? / CLUB-? |
+| Fri 16 Oct | SW-2: fix README/INSTALL contradictions | HW-2: debugger breakpoints working | Close W1 items with evidence; devlog #1 |
+| Sat 17 Oct | Bench session: set up workspace, test supply current limit (6 h) | | |
+| Sun 18 Oct | Off. Weekly review (1 h). | | |
 
 ---
 
-## 6. Daily plan (Sprint 1: 12-25 October)
+## 9. Reviews
 
-Maps the class MVP's 2-week schedule onto real dates. "Small" items fill the gaps.
-
-| Date | Main task | Small task |
+| When | Time | Checks |
 |---|---|---|
-| Mon 12 Oct | Shared setup: sim headless, camera topics, intrinsics read | Create project board + fields (section 7) |
-| Tue 13 Oct | Shared setup: GT pose logging, preset arm poses; **day-2 gate** | Add issues for R1-R4 from the acceptance checklists |
-| Wed 14 Oct | R1: checkerboard in world; capture script | R2: decide 2-3 object classes |
-| Thu 15 Oct | R2: randomiser + projected labels + YOLO export; check 50 images | R1: start capture of ~15 poses |
-| Fri 16 Oct | R1: solve intrinsics + hand-eye (2 methods) | Devlog #1; board tidy |
-| Sat 17 Oct | R2: start full capture running in background | R3: depth crop from GT boxes |
-| Sun 18 Oct | Buffer / rest | — |
-| Mon 19 Oct | R1: compare to URDF, table; **day-6 gate** | Colab notebook dry run on a few images |
-| Tue 20 Oct | R2: train on Colab; R3: plane removal + PCA init | Website skeleton |
-| Wed 21 Oct | R2: evaluate mAP; overlay images; **day-8 gate** | Order HW parts |
-| Thu 22 Oct | R3: ICP + metrics on GT boxes | — |
-| Fri 23 Oct | R3: swap in YOLO boxes; **day-11 gate** | Devlog #2 |
-| Sat 24 Oct | Integrate calibrated transform into R3; rerun | Report outline |
-| Sun 25 Oct | Report draft: three tables, limitations | Sprint 1 review note |
-
-If a gate fails, the remaining days shift into Sprint 2 (the 4-week plan). Nothing else
-in Sprint 1 takes priority over the class MVP.
+| Daily, end of day | 10 min | Commits pushed; issue comments written; tomorrow's two main tasks chosen |
+| Weekly, Sunday | 1 h | ≥1 deliverable closed with evidence; devlog entry; essentials kept (sleep, exercise, people) |
+| Sprint end | 1.5 h | ≥2 deliverables; velocity recorded; scale-down and cut-scope triggers checked; next sprint committed |
+| Milestone end | 2-3 h | Releases tagged; demo recorded; website updated; concept matrix updated |
 
 ---
 
-## 7. GitHub project board setup
+## 10. GitHub project board (proof of work)
 
-One **user-level** project (so it can hold issues from several repos: R-SIM, R-HW,
-R-VS, website). Make it public if you want it to show completed work.
+One **user-level** project so it holds issues from every repo (UR3 suite, DUM-E,
+Viable Solutions, club, website). Make it public if it should show completed work.
 
 ### Fields
 
 | Field | Type | Values |
 |---|---|---|
 | Status | Single select | Backlog, Ready, In progress, Review, Done |
-| Robot | Single select | R-SIM, R-HW, R-VS, Portfolio |
-| Track | Single select | CV, ML, EMB/HW, SW, Report, Website |
-| Tier | Single select | Class MVP, MVP+, Advanced, Stretch |
-| Deliverable ID | Text | e.g. `R2`, `HW-3`, `ML-6` |
+| Robot | Single select | R-SIM, R-HW, R-VS, R-CLUB, Portfolio |
+| Track | Single select | CV, ML, EMB/HW, SW, Mechanical, Website |
+| Tier | Single select | MVP+, Advanced, Stretch |
+| Deliverable ID | Text | e.g. `SW-1`, `HW-3`, `ML-6` |
 | Sprint | Iteration | 2-week iterations starting 12 Oct 2026 |
 | Size | Single select | S (≤2 h), M (≤4 h), L (split it) |
-| Evidence | Text (URL) | PR, plot, video, test result |
-
-Milestones (M1-M6) live in each repo and match the dates in section 3.
+| Est. hours | Number | Set when planned |
+| Actual hours | Number | Set when closed |
+| Evidence | Text (URL) | PR, plot, video, test output |
 
 ### Views
 
 | View | Layout | Filter / group | Purpose |
 |---|---|---|---|
-| Sprint board | Board | Current iteration, grouped by Status | Daily work |
-| Roadmap | Roadmap | Grouped by Robot, by Sprint | Monthly picture |
-| By robot | Table | Grouped by Robot then Track | Concept coverage at a glance |
-| Shipped | Table | Status = Done, Evidence not empty | The "what was accomplished" view |
-| Class MVP | Table | Tier = Class MVP | Teacher-facing progress |
+| Today | Board | Status = In progress | Daily work |
+| Sprint | Board | Current iteration, by Status | Sprint progress |
+| Roadmap | Roadmap | By Robot, by Sprint | Monthly picture |
+| By robot | Table | By Robot then Track | Concept coverage |
+| Shipped | Table | Status = Done, Evidence set, sorted by close date | Proof of work |
+| Velocity | Table | Group by Sprint, sum Est. and Actual hours | Scale-down data |
 
-### Automation (built into GitHub Projects)
+### Automation, labels, templates
 
-- Auto-add new issues and PRs from the robot repos.
-- Item closed or PR merged -> Status = Done.
-- PR opened that links an issue -> Status = Review.
-
-### Labels (per repo)
-
-`track:cv`, `track:ml`, `track:emb`, `track:sw`, `type:deliverable`, `type:experiment`,
-`type:bug`, `tier:class-mvp`, `tier:mvp+`, `tier:advanced`, `tier:stretch`, `blocked`.
-
-### Issue templates
-
-This repo includes issue forms in `.github/ISSUE_TEMPLATE/`:
-- **Deliverable**: ID, robot, track, acceptance criteria, evidence.
-- **Experiment**: hypothesis, setup, metric, result, conclusion.
-- **Bug**: steps, expected, actual, environment.
-
-Copy them into the other robot repos so every board item has the same shape.
+- Built-in workflows: auto-add issues/PRs from all repos; closed or merged -> Done; PR linked -> Review.
+- Labels: `track:cv`, `track:ml`, `track:emb`, `track:sw`, `track:mech`, `type:deliverable`,
+  `type:experiment`, `type:bug`, `tier:mvp+`, `tier:advanced`, `tier:stretch`, `blocked`.
+- Issue forms in `.github/ISSUE_TEMPLATE/` (Deliverable, Experiment, Bug) include estimated
+  hours, actual hours, evidence and "what I learned". Copy them into the other repos.
 
 ---
 
-## 8. Portfolio website
+## 11. Portfolio website
 
-Static site on GitHub Pages (Astro, Hugo, Jekyll or MkDocs all work).
+Static site on GitHub Pages (Astro, Hugo, Jekyll or MkDocs).
 
 | Page | Content | Updated |
 |---|---|---|
-| Home | One line on what you build; three robot cards with current status | Monthly |
-| Robot pages (one per robot) | Goal, architecture diagram, results table, videos, link to repo and board | At each milestone |
-| Results | Every metric you have published, each linking to the script that produced it | At each milestone |
-| Devlog | Short weekly or bi-weekly entries copied from `docs/devlog/` | Weekly or per sprint |
-| About | Resume PDF, contact, skills grouped by concept-density matrix rows | As needed |
+| Home | One line on what you build; a card per robot with current status | Monthly |
+| Robot pages | Goal, architecture, results table, videos, links to repo and board | Each milestone |
+| Results | Every published metric, each linking to the script that produced it | Each milestone |
+| Devlog | Weekly entries copied from `docs/devlog/` | Weekly |
+| About | Resume PDF, contact, skills grouped by the concept matrix | As needed |
 
-Content flow: issue evidence -> devlog entry (weekly) -> robot page update (monthly).
-Write once in the repo; the website pulls or copies from it.
-
----
-
-## 9. Review checklist per level
-
-**Daily:** committed? issue comment written?
-**Weekly (Fri):** issues closed with evidence? devlog entry? board current?
-**Sprint end:** sprint goal met? review note written? next sprint's goal chosen?
-**Milestone end:** release tagged? demo recorded? website robot page updated? matrix updated?
+Content flow: issue evidence -> weekly devlog -> robot page at each milestone. Write once
+in the repo; the site copies from it.

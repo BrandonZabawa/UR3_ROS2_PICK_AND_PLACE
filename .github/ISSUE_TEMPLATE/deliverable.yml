@@ -14,21 +14,21 @@ body:
     id: robot
     attributes:
       label: Robot
-      options: [R-SIM, R-HW, R-VS, Portfolio]
+      options: [R-SIM, R-HW, R-VS, R-CLUB, Portfolio]
     validations:
       required: true
   - type: dropdown
     id: track
     attributes:
       label: Track
-      options: [CV, ML, EMB/HW, SW, Report, Website]
+      options: [CV, ML, EMB/HW, SW, Mechanical, Website]
     validations:
       required: true
   - type: dropdown
     id: tier
     attributes:
       label: Tier
-      options: [Class MVP, MVP+, Advanced, Stretch]
+      options: [MVP+, Advanced, Stretch]
     validations:
       required: true
   - type: textarea
@@ -48,6 +48,22 @@ body:
         - [ ]
     validations:
       required: true
+  - type: input
+    id: est_hours
+    attributes:
+      label: Estimated hours
+    validations:
+      required: true
+  - type: input
+    id: actual_hours
+    attributes:
+      label: Actual hours
+      description: Fill in when closing.
+  - type: textarea
+    id: learned
+    attributes:
+      label: What I learned
+      description: Fill in when closing. Concepts, mistakes, what you would do differently.
   - type: textarea
     id: evidence
     attributes:
