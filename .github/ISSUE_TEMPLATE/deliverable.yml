@@ -1,0 +1,55 @@
+name: Deliverable
+description: A planned piece of work with acceptance criteria and evidence
+title: "[ID] short description"
+labels: ["type:deliverable"]
+body:
+  - type: input
+    id: deliverable_id
+    attributes:
+      label: Deliverable ID
+      description: e.g. R2, HW-3, ML-6, SW-1
+    validations:
+      required: true
+  - type: dropdown
+    id: robot
+    attributes:
+      label: Robot
+      options: [R-SIM, R-HW, R-VS, Portfolio]
+    validations:
+      required: true
+  - type: dropdown
+    id: track
+    attributes:
+      label: Track
+      options: [CV, ML, EMB/HW, SW, Report, Website]
+    validations:
+      required: true
+  - type: dropdown
+    id: tier
+    attributes:
+      label: Tier
+      options: [Class MVP, MVP+, Advanced, Stretch]
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: One or two sentences on what this delivers.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Checklist that defines done.
+      value: |
+        - [ ]
+        - [ ]
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Fill in when closing. PR, plot, video, test output.

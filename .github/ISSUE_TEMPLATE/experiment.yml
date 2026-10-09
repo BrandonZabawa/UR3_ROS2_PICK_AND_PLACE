@@ -1,0 +1,38 @@
+name: Experiment
+description: A measured experiment (training run, ablation, calibration test, bench test)
+title: "[EXP] short description"
+labels: ["type:experiment"]
+body:
+  - type: input
+    id: deliverable_id
+    attributes:
+      label: Related deliverable ID
+  - type: textarea
+    id: hypothesis
+    attributes:
+      label: Hypothesis / question
+    validations:
+      required: true
+  - type: textarea
+    id: setup
+    attributes:
+      label: Setup
+      description: Config, seeds, data, hardware, versions.
+    validations:
+      required: true
+  - type: input
+    id: metric
+    attributes:
+      label: Metric
+      description: e.g. mAP@0.5:0.95, translation error (mm), step-response overshoot (%)
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Result
+      description: Numbers, plots, links. Fill in when done.
+  - type: textarea
+    id: conclusion
+    attributes:
+      label: Conclusion and next step
