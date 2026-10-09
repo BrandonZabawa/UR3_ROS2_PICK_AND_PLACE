@@ -51,14 +51,14 @@ body:
   - type: input
     id: est_hours
     attributes:
-      label: Estimated hours
+      label: Estimated focused hours
     validations:
       required: true
   - type: input
     id: actual_hours
     attributes:
-      label: Actual hours
-      description: Fill in when closing.
+      label: Actual focused hours
+      description: Fill in when closing. Sum from the focus log.
   - type: textarea
     id: learned
     attributes:

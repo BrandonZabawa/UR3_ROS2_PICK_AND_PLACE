@@ -39,7 +39,7 @@ body:
   - type: input
     id: hours
     attributes:
-      label: Estimated / actual hours
+      label: Estimated / actual focused hours
       description: e.g. 3 / 4.5
   - type: textarea
     id: learned
