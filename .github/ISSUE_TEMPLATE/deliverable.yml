@@ -1,0 +1,71 @@
+name: Deliverable
+description: A planned piece of work with acceptance criteria and evidence
+title: "[ID] short description"
+labels: ["type:deliverable"]
+body:
+  - type: input
+    id: deliverable_id
+    attributes:
+      label: Deliverable ID
+      description: e.g. HW-3, ML-6, SW-1, AV-2
+    validations:
+      required: true
+  - type: dropdown
+    id: robot
+    attributes:
+      label: Robot
+      options: [R-SIM, R-HW, R-AV, R-VS, R-CLUB, Portfolio]
+    validations:
+      required: true
+  - type: dropdown
+    id: track
+    attributes:
+      label: Track
+      options: [CV, ML, EMB/HW, SW, Mechanical, Website]
+    validations:
+      required: true
+  - type: dropdown
+    id: tier
+    attributes:
+      label: Tier
+      options: [MVP+, Advanced, Stretch]
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: One or two sentences on what this delivers.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Checklist that defines done.
+      value: |
+        - [ ]
+        - [ ]
+    validations:
+      required: true
+  - type: input
+    id: est_hours
+    attributes:
+      label: Estimated focused hours
+    validations:
+      required: true
+  - type: input
+    id: actual_hours
+    attributes:
+      label: Actual focused hours
+      description: Fill in when closing. Sum from the focus log.
+  - type: textarea
+    id: learned
+    attributes:
+      label: What I learned
+      description: Fill in when closing. Concepts, mistakes, what you would do differently.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Fill in when closing. PR, plot, video, test output.
